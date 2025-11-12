@@ -46,7 +46,7 @@ alphabet = {
 
 
 def translate(string: str):
-    translated_string = "".join([alphabet.get(char, char) for char in string])
+    translated_string = "".join([alphabet.get(char.lower(), char) for char in string])
     return translated_string
 
 
@@ -56,7 +56,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-# Токен бота (получите у @BotFather)
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # Команда /start
@@ -64,7 +63,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Привет! Я твой учитель корейского. Отправь мне любое сообщение, и я переведу!"
+        "Привет! Я твой учитель корейского. Отправь мне любое сообщение, и я его переведу!"
     )
 
 # Команда /help
@@ -75,10 +74,8 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Доступные команды:\n"
         "/start - начать работу\n"
         "/help - получить справку\n\n"
-        "Просто отправь мне текст, и я его повторю!"
+        "Просто отправь мне текст, и я его переведу!"
     )
-
-# Обработка текстовых сообщений
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -87,7 +84,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     print(f'Пользователь ({update.message.chat.id}) в {message_type}: "{text}"')
 
-    # Эхо-ответ
     response = translate(text)
 
     print('Бот отвечает:', response)
